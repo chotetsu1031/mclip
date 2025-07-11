@@ -43,13 +43,20 @@ if command == "--add" and len(sys.argv) >= 4:
   save_phrases(TEXT)
   print(f"■ '{key}' を登録／更新しました。")
 elif command == "--delete" and len(sys.argv) == 3:
-  key = sys.argv[2]
-  if key in TEXT:
-    del TEXT[key]
-    save_phrases(TEXT)
-    print(f"■ '{key}' を削除しました。")
+  #削除するかどうかの確認
+  confirm = input(sys.argv[2] + "を本当に削除しますか？(Y/N)")
+  if(confirm == "N" or confirm == "n"):
+    print("■ 削除をキャンセルしました。")
+  elif(confirm == "Y" or confirm == "y"):
+      key = sys.argv[2]
+      if key in TEXT:
+        del TEXT[key]
+        save_phrases(TEXT)
+        print(f"■ '{key}' を削除しました。")
+      else:
+        print(f"■ '{key}' は登録されていません。")
   else:
-    print(f"■ '{key}' は登録されていません。")
+    print("■ Y/N以外が入力されたため、削除をキャンセルしました。")
 elif command == "--list":
   print("■ 登録済みキーフレーズ一覧：")
   for k in TEXT:
